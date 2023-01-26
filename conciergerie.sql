@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 25 jan. 2023 à 22:09
+-- Généré le : jeu. 26 jan. 2023 à 21:34
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -37,6 +37,14 @@ CREATE TABLE `client` (
   `password` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `client`
+--
+
+INSERT INTO `client` (`id_client`, `nom`, `prenom`, `addresse`, `mail`, `telephone`, `password`) VALUES
+(17, 'Atsin', 'David Yann', '16 Boulevard Charle Nicolle', 'atsin2002@gmail.com', 747765867, ''),
+(18, 'Tchotcheu', 'Artillio', '16bf', 'atsin@fgs.com', 1544558, 'dsfsdfdsf');
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +56,14 @@ CREATE TABLE `commande` (
   `date_order` date NOT NULL,
   `quantite` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `commande`
+--
+
+INSERT INTO `commande` (`id_order`, `date_order`, `quantite`) VALUES
+(17, '2023-01-04', 12),
+(18, '2023-01-04', 112);
 
 -- --------------------------------------------------------
 
@@ -107,12 +123,24 @@ CREATE TABLE `paiement` (
 --
 
 CREATE TABLE `produit` (
-  `id_produit` int(11) DEFAULT NULL,
+  `id_produit` int(11) NOT NULL,
   `nom_produit` varchar(50) NOT NULL,
-  `type` varchar(50) NOT NULL,
   `prix_unite` int(11) NOT NULL,
-  `point_produit` int(11) NOT NULL
+  `point_produit` int(11) NOT NULL,
+  `categorie` varchar(50) NOT NULL,
+  `marque` varchar(50) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  `image` varchar(1000) NOT NULL,
+  `quantite` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `produit`
+--
+
+INSERT INTO `produit` (`id_produit`, `nom_produit`, `prix_unite`, `point_produit`, `categorie`, `marque`, `description`, `image`, `quantite`) VALUES
+(1, 'Brume', 12, 0, 'Floral', 'Chanel', '', '', 12),
+(2, 'yyffyt', 23, 0, 'Floral', 'Chanel', '', '', 34);
 
 -- --------------------------------------------------------
 
@@ -179,6 +207,12 @@ ALTER TABLE `paiement`
   ADD PRIMARY KEY (`id_paiement`);
 
 --
+-- Index pour la table `produit`
+--
+ALTER TABLE `produit`
+  ADD PRIMARY KEY (`id_produit`);
+
+--
 -- Index pour la table `promotion`
 --
 ALTER TABLE `promotion`
@@ -198,13 +232,13 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT pour la table `client`
 --
 ALTER TABLE `client`
-  MODIFY `id_client` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_client` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pour la table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pour la table `facture`
@@ -231,6 +265,12 @@ ALTER TABLE `paiement`
   MODIFY `id_paiement` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `produit`
+--
+ALTER TABLE `produit`
+  MODIFY `id_produit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT pour la table `promotion`
 --
 ALTER TABLE `promotion`
@@ -241,6 +281,16 @@ ALTER TABLE `promotion`
 --
 ALTER TABLE `stock`
   MODIFY `id_stock` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `commande`
+--
+ALTER TABLE `commande`
+  ADD CONSTRAINT `commande_ibfk_1` FOREIGN KEY (`id_order`) REFERENCES `client` (`id_client`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
